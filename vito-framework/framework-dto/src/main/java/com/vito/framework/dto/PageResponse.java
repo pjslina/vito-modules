@@ -89,22 +89,23 @@ public class PageResponse<T> extends Response {
         return !isEmpty();
     }
 
-    public static PageResponse success() {
+    public static PageResponse buildSuccess() {
         PageResponse response = new PageResponse();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         return response;
     }
 
-    public static PageResponse failure(int code, String message) {
+    public static PageResponse buildFailure(String errCode, String errMessage) {
         PageResponse response = new PageResponse();
-        response.setCode(code);
-        response.setMessage(message);
+        response.setSuccess(false);
+        response.setErrCode(errCode);
+        response.setErrMessage(errMessage);
         return response;
     }
 
     public static <T> PageResponse<T> of(int pageSize, int pageIndex) {
         PageResponse<T> response = new PageResponse<>();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         response.setData(Collections.emptyList());
         response.setTotalCount(0);
         response.setPageSize(pageSize);
@@ -114,7 +115,7 @@ public class PageResponse<T> extends Response {
 
     public static <T> PageResponse<T> of(Collection<T> data, int totalCount, int pageSize, int pageIndex) {
         PageResponse<T> response = new PageResponse<>();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         response.setData(data);
         response.setTotalCount(totalCount);
         response.setPageSize(pageSize);

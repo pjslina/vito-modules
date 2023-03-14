@@ -9,43 +9,50 @@ public class Response extends BaseDTO {
 
     private static final long serialVersionUID = 1L;
 
-    private int code;
-    private String message;
+    private boolean success;
+    private String errCode;
+    private String errMessage;
 
-    public int getCode() {
-        return code;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public String getMessage() {
-        return message;
+    public String getErrCode() {
+        return errCode;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
+
+    public String getErrMessage() {
+        return errMessage;
+    }
+
+    public void setErrMessage(String errMessage) {
+        this.errMessage = errMessage;
     }
 
     @Override
     public String toString() {
-        return "Response{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                '}';
+        return "Response [success=" + success + ", errCode=" + errCode + ", errMessage=" + errMessage + "]";
     }
 
-    public static Response success() {
+    public static Response buildSuccess() {
         Response response = new Response();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         return response;
     }
 
-    public static Response failure(int code, String message) {
+    public static Response buildFailure(String errCode, String errMessage) {
         Response response = new Response();
-        response.setCode(code);
-        response.setMessage(message);
+        response.setSuccess(false);
+        response.setErrCode(errCode);
+        response.setErrMessage(errMessage);
         return response;
     }
 }

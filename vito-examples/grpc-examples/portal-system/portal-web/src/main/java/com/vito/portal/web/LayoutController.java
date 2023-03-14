@@ -19,7 +19,7 @@ public class LayoutController {
 
     @GetMapping(value = "/layout")
     public SingleResponse userLayout(@RequestParam Long userId) {
-        return SingleResponse.success();
+        return SingleResponse.buildSuccess();
     }
 
     @PostMapping(value = "/layout")

@@ -20,22 +20,23 @@ public class SingleResponse<T> extends Response {
         this.data = data;
     }
 
-    public static SingleResponse success() {
+    public static SingleResponse buildSuccess() {
         SingleResponse response = new SingleResponse();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         return response;
     }
 
-    public static SingleResponse failure(int code, String message) {
+    public static SingleResponse buildFailure(String errCode, String errMessage) {
         SingleResponse response = new SingleResponse();
-        response.setCode(code);
-        response.setMessage(message);
+        response.setSuccess(false);
+        response.setErrCode(errCode);
+        response.setErrMessage(errMessage);
         return response;
     }
 
     public static <T> SingleResponse<T> of(T data) {
         SingleResponse<T> response = new SingleResponse<>();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         response.setData(data);
         return response;
     }

@@ -12,12 +12,12 @@ import java.util.List;
  * @author panjin
  */
 public class MultiResponse<T> extends Response {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private Collection<T> data;
 
-    public Collection<T> getData() {
+    public List<T> getData() {
         if (null == data) {
             return Collections.emptyList();
         }
@@ -30,31 +30,32 @@ public class MultiResponse<T> extends Response {
     public void setData(Collection<T> data) {
         this.data = data;
     }
-    
+
     public boolean isEmpty() {
         return data == null || data.isEmpty();
     }
-    
+
     public boolean isNotEmpty() {
         return !isEmpty();
     }
 
-    public static MultiResponse success() {
+    public static MultiResponse buildSuccess() {
         MultiResponse response = new MultiResponse();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         return response;
     }
 
-    public static MultiResponse failure(int code, String message) {
+    public static MultiResponse buildFailure(String errCode, String errMessage) {
         MultiResponse response = new MultiResponse();
-        response.setCode(code);
-        response.setMessage(message);
+        response.setSuccess(false);
+        response.setErrCode(errCode);
+        response.setErrMessage(errMessage);
         return response;
     }
 
-    public static <T> MultiResponse<T> of (Collection<T> data) {
+    public static <T> MultiResponse<T> of(Collection<T> data) {
         MultiResponse<T> response = new MultiResponse<>();
-        response.setCode(DtoConstants.SUCCESS_CODE);
+        response.setSuccess(true);
         response.setData(data);
         return response;
     }

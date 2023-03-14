@@ -31,6 +31,6 @@ public class LayoutAddCmdExe {
             userLayoutList.add(userLayout);
         });
         layoutRepository.saveOrUpdateBatch(userLayoutList);
-        return Response.success();
+        return Response.buildSuccess();
     }
 }
