@@ -5,10 +5,12 @@ import com.vito.bank.domain.types.AccountId;
 import com.vito.bank.domain.types.AccountNumber;
 import com.vito.bank.domain.types.UserId;
 import com.vito.bank.gateway.AccountGateway;
+import com.vito.bank.infra.common.Constants;
 import com.vito.bank.infra.persistence.AccountBuilder;
 import com.vito.bank.infra.persistence.AccountDO;
 import com.vito.bank.infra.persistence.mapper.AccountMapper;
 import com.vito.framework.exception.ExceptionFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
  * @author panjin
  */
 @Repository
+@ConditionalOnProperty(prefix = "orm", name = "type", havingValue = Constants.ORM_TYPE_MYBATIS)
 public class AccountRepositoryImpl implements AccountGateway {
 
     @Resource

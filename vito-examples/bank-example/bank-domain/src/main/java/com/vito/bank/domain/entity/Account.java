@@ -28,10 +28,11 @@ public class Account {
         }
 
         if (this.dailyLimit.compareTo(money) < 0) {
-            throw ExceptionFactory.bizException("限额");
+            throw ExceptionFactory.bizException("今日额度超限");
         }
 
         this.available = this.available.subtract(money);
+        this.dailyLimit = this.dailyLimit.subtract(money);
     }
 
     /**
