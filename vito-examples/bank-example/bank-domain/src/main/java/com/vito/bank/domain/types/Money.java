@@ -1,6 +1,7 @@
 package com.vito.bank.domain.types;
 
 import com.vito.framework.exception.BizException;
+import com.vito.framework.exception.ExceptionFactory;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class Money {
     public Money(BigDecimal amount, Currency currency) {
 
         if (amount == null) {
-            throw new BizException(-1, "金额不能为空");
+            throw ExceptionFactory.bizException("金额不能为空");
         }
         this.amount = amount;
         this.currency = currency;

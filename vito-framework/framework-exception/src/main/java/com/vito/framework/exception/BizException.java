@@ -7,11 +7,22 @@ public class BizException extends BaseException {
 
     private static final long serialVersionUID = 1L;
 
-    public BizException(int code, String message) {
-        super(code, message);
+    private static final String DEFAULT_ERR_CODE = "BIZ_ERROR";
+
+    public BizException(String errMessage) {
+        super(DEFAULT_ERR_CODE, errMessage);
     }
 
-    public BizException(int code, String message, Throwable cause) {
-        super(code, message, cause);
+    public BizException(String errCode, String errMessage) {
+        super(errCode, errMessage);
     }
+
+    public BizException(String errMessage, Throwable e) {
+        super(DEFAULT_ERR_CODE, errMessage, e);
+    }
+
+    public BizException(String errorCode, String errMessage, Throwable e) {
+        super(errorCode, errMessage, e);
+    }
+
 }

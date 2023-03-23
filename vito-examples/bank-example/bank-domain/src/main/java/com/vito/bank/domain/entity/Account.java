@@ -1,7 +1,7 @@
 package com.vito.bank.domain.entity;
 
 import com.vito.bank.domain.types.*;
-import com.vito.framework.exception.BizException;
+import com.vito.framework.exception.ExceptionFactory;
 import lombok.Data;
 
 /**
@@ -24,11 +24,11 @@ public class Account {
      */
     public void withdraw(Money money) {
         if (this.available.compareTo(money) < 0) {
-            throw new BizException(-1, "余额不足");
+            throw ExceptionFactory.bizException("余额不足");
         }
 
         if (this.dailyLimit.compareTo(money) < 0) {
-            throw new BizException(-1, "限额");
+            throw ExceptionFactory.bizException("限额");
         }
 
         this.available = this.available.subtract(money);
@@ -42,7 +42,7 @@ public class Account {
      */
     public void deposit(Money money) {
         if (!this.getCurrency().equals(money.getCurrency())) {
-            throw new BizException(-1, "币种不正确");
+            throw ExceptionFactory.bizException("币种不正确");
         }
 
         this.available = this.available.add(money);
