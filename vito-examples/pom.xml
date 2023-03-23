@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>grpc-examples</module>
+        <module>bank-example</module>
     </modules>
 
     <properties>
