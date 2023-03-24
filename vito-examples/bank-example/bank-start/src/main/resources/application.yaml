@@ -2,13 +2,18 @@ server:
   port: 8080
 
 spring:
+  profiles:
+    active: @spring.profiles.active@
   application:
     name: bank
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.16.101:3306/vito_bank?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: 12345678
+    driver-class-name: ${db.driver}
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+  jpa:
+    hibernate:
+      ddl-auto: update
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

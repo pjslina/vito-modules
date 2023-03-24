@@ -1,10 +1,13 @@
-package com.vito.framework.database;
+package com.vito.bank.infra.common;
 
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**
+ * MappedSuperclass注解是解决jpa的实体类在orm创建表结构时，不会创建继承类的这些字段问题
  * @author panjin
  */
+@MappedSuperclass
 public class BaseDO {
 
     /** 是否删除0-未删除，1-删除 */
