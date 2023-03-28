@@ -1,7 +1,8 @@
 package com.vito.bank.domain.entity;
 
+import com.vito.bank.common.enums.BankErrorCodeEnum;
 import com.vito.bank.domain.types.*;
-import com.vito.framework.exception.ExceptionFactory;
+import com.vito.framework.exception.Assert;
 import lombok.Data;
 
 /**
@@ -23,13 +24,8 @@ public class Account {
      * @param money
      */
     public void withdraw(Money money) {
-        if (this.available.compareTo(money) < 0) {
-            throw ExceptionFactory.bizException("余额不足");
-        }
-
-        if (this.dailyLimit.compareTo(money) < 0) {
-            throw ExceptionFactory.bizException("今日额度超限");
-        }
+        Assert.isTrue(this.available.compareTo(money) < 0, BankErrorCodeEnum.BALANCE_IS_NOT_ENOUGH);
+        Assert.isTrue(this.dailyLimit.compareTo(money) < 0, BankErrorCodeEnum.QUOTA_IS_NOT_ENOUGH);
 
         this.available = this.available.subtract(money);
         this.dailyLimit = this.dailyLimit.subtract(money);
@@ -42,10 +38,7 @@ public class Account {
      * @throws Exception
      */
     public void deposit(Money money) {
-        if (!this.getCurrency().equals(money.getCurrency())) {
-            throw ExceptionFactory.bizException("币种不正确");
-        }
-
+        Assert.isFalse(this.getCurrency().equals(money.getCurrency()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
         this.available = this.available.add(money);
     }
 }

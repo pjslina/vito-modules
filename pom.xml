@@ -6,6 +6,7 @@
     <modules>
         <module>vito-framework</module>
         <module>vito-examples</module>
+        <module>parent-boot</module>
     </modules>
     <groupId>com.vito</groupId>
     <artifactId>vito-modules</artifactId>

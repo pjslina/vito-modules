@@ -1,5 +1,6 @@
 package com.vito.bank.infra.repository.impl;
 
+import com.vito.bank.common.enums.BankErrorCodeEnum;
 import com.vito.bank.domain.entity.Account;
 import com.vito.bank.domain.types.AccountId;
 import com.vito.bank.domain.types.AccountNumber;
@@ -9,7 +10,7 @@ import com.vito.bank.infra.common.Constants;
 import com.vito.bank.infra.persistence.AccountBuilder;
 import com.vito.bank.infra.persistence.AccountDO;
 import com.vito.bank.infra.persistence.mapper.AccountMapper;
-import com.vito.framework.exception.ExceptionFactory;
+import com.vito.framework.exception.Assert;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
@@ -37,18 +38,14 @@ public class AccountRepositoryImpl implements AccountGateway {
     @Override
     public Account find(AccountNumber accountNumber) {
         AccountDO accountDO = accountMapper.selectOneByAccountNumber(accountNumber.getValue());
-        if (accountDO == null) {
-            throw ExceptionFactory.bizException(String.format("账户[%s]不存在", accountNumber.getValue()));
-        }
+        Assert.notNull(accountDO, BankErrorCodeEnum.ACCOUNT_IS_NULL.setArgs(new String[] { accountNumber.getValue()}));
         return accountBuilder.toAccount(accountDO);
     }
 
     @Override
     public Account find(UserId userId) {
         AccountDO accountDO = accountMapper.selectOneByUserId(userId.getId());
-        if (accountDO == null) {
-            throw ExceptionFactory.bizException("账户不存在");
-        }
+        Assert.notNull(accountDO, BankErrorCodeEnum.ACCOUNT_IS_NULL_WITH_USER.setArgs(new Long[] { userId.getId()}));
         return accountBuilder.toAccount(accountDO);
     }
 

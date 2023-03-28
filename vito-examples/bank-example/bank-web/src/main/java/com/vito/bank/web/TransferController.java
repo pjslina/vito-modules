@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * @author panjin
  */
@@ -20,7 +22,7 @@ public class TransferController {
     private TransferService transferService;
 
     @PostMapping
-    public Response transfer(@RequestBody TransferCmd transferCmd) {
+    public Response transfer(@Valid @RequestBody TransferCmd transferCmd) {
         return transferService.transfer(transferCmd);
     }
 }

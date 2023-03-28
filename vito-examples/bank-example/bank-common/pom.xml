@@ -9,29 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bank-domain</artifactId>
-    <name>${project.artifactId}</name>
-
+    <artifactId>bank-common</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.vito.framework</groupId>
             <artifactId>framework-exception</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vito.framework</groupId>
-            <artifactId>framework-dto</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vito</groupId>
-            <artifactId>bank-common</artifactId>
         </dependency>
     </dependencies>
 

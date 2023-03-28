@@ -1,7 +1,8 @@
 package com.vito.bank.domain.types;
 
+import com.vito.bank.common.enums.BankErrorCodeEnum;
+import com.vito.framework.exception.Assert;
 import com.vito.framework.exception.BizException;
-import com.vito.framework.exception.ExceptionFactory;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,10 +18,7 @@ public class Money {
     private Currency currency;
 
     public Money(BigDecimal amount, Currency currency) {
-
-        if (amount == null) {
-            throw ExceptionFactory.bizException("金额不能为空");
-        }
+        Assert.notNull(amount, BankErrorCodeEnum.AMOUNT_IS_NULL);
         this.amount = amount;
         this.currency = currency;
     }

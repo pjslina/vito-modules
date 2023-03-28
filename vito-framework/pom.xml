@@ -15,6 +15,7 @@
         <module>framework-exception</module>
         <module>framework-dependencies</module>
         <module>framework-utils</module>
+        <module>framework-web-starter</module>
     </modules>
 
     <properties>

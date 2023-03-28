@@ -18,6 +18,7 @@
         <module>bank-domain</module>
         <module>bank-client</module>
         <module>bank-infrastructure</module>
+        <module>bank-common</module>
     </modules>
 
     <dependencies>
@@ -58,6 +59,11 @@
             <dependency>
                 <groupId>com.vito</groupId>
                 <artifactId>bank-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vito</groupId>
+                <artifactId>bank-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

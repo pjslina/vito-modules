@@ -9,33 +9,20 @@ public abstract class BaseException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private String errCode;
-
-    public BaseException(String errMessage) {
-        super(errMessage);
+    public BaseCode getBaseCode() {
+        return baseCode;
     }
 
-    public BaseException(String errCode, String errMessage) {
-        super(errMessage);
-        this.errCode = errCode;
+    private final BaseCode baseCode;
+
+    public BaseException(BaseCode baseCode) {
+        super(baseCode.getErrorMessage());
+        this.baseCode = baseCode;
     }
 
-    public BaseException(String errMessage, Throwable e) {
-        super(errMessage, e);
+    public BaseException(BaseCode baseCode, Throwable e) {
+        super(baseCode.getErrorMessage(), e);
+        this.baseCode = baseCode;
     }
-
-    public BaseException(String errCode, String errMessage, Throwable e) {
-        super(errMessage, e);
-        this.errCode = errCode;
-    }
-
-    public String getErrCode() {
-        return errCode;
-    }
-
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
-
 
 }

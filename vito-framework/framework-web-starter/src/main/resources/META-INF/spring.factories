@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.vito.springboot.configuration.ExceptionAdvice,\
+  com.vito.springboot.configuration.WebBeanConfig

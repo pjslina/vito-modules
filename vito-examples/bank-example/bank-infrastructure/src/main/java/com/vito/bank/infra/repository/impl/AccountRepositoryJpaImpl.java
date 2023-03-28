@@ -1,5 +1,6 @@
 package com.vito.bank.infra.repository.impl;
 
+import com.vito.bank.common.enums.BankErrorCodeEnum;
 import com.vito.bank.domain.entity.Account;
 import com.vito.bank.domain.types.AccountId;
 import com.vito.bank.domain.types.AccountNumber;
@@ -9,6 +10,7 @@ import com.vito.bank.infra.common.Constants;
 import com.vito.bank.infra.persistence.AccountBuilder;
 import com.vito.bank.infra.persistence.AccountDO;
 import com.vito.bank.infra.persistence.repositories.AccountRepository;
+import com.vito.framework.exception.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Example;
@@ -32,6 +34,7 @@ public class AccountRepositoryJpaImpl implements AccountGateway {
     @Override
     public Account find(AccountId id) {
         Optional<AccountDO> accountDO = accountRepository.findById(id.getValue());
+        Assert.isTrue(accountDO.isPresent(), BankErrorCodeEnum.ACCOUNT_IS_NULL.setArgs(new Long[] { id.getValue()}));
         return accountBuilder.toAccount(accountDO.get());
     }
 
@@ -40,8 +43,9 @@ public class AccountRepositoryJpaImpl implements AccountGateway {
         AccountDO accountDO = new AccountDO();
         accountDO.setAccountNumber(accountNumber.getValue());
         Example<AccountDO> example = Example.of(accountDO);
-        AccountDO accountDB = accountRepository.findOne(example).get();
-        return accountBuilder.toAccount(accountDB);
+        Optional<AccountDO> accountDB = accountRepository.findOne(example);
+        Assert.isTrue(accountDB.isPresent(), BankErrorCodeEnum.ACCOUNT_IS_NULL.setArgs(new String[] { accountNumber.getValue()}));
+        return accountBuilder.toAccount(accountDB.get());
     }
 
     @Override
@@ -49,8 +53,9 @@ public class AccountRepositoryJpaImpl implements AccountGateway {
         AccountDO accountDO = new AccountDO();
         accountDO.setUserId(userId.getId());
         Example<AccountDO> example = Example.of(accountDO);
-        AccountDO accountDB = accountRepository.findOne(example).get();
-        return accountBuilder.toAccount(accountDB);
+        Optional<AccountDO> account = accountRepository.findOne(example);
+        Assert.isTrue(account.isPresent(), BankErrorCodeEnum.ACCOUNT_IS_NULL_WITH_USER.setArgs(new Long[] { userId.getId()}));
+        return accountBuilder.toAccount(account.get());
     }
 
     @Override
