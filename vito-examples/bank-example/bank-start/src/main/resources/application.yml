@@ -20,3 +20,10 @@ mybatis-plus:
 
 orm:
   type: jpa
+
+#添加如下属性，会将env（配置成*，则表示所有）的端点加入到actuator中，用于检查配置项有没有加入到环境变量中
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env

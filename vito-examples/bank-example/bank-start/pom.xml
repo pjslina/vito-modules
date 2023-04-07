@@ -17,6 +17,11 @@
             <groupId>com.vito</groupId>
             <artifactId>bank-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.vito</groupId>
+            <artifactId>framework-log4j2-starter</artifactId>
+            <version>${project.build.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

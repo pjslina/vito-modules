@@ -16,6 +16,7 @@
         <module>framework-dependencies</module>
         <module>framework-utils</module>
         <module>framework-web-starter</module>
+        <module>framework-log4j2-starter</module>
     </modules>
 
     <properties>

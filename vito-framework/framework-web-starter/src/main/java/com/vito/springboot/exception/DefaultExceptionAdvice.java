@@ -39,6 +39,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Response handleMethodArgumentException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage(), e);
         FieldError fieldError = e.getBindingResult().getFieldError();
         String message = null;
         try {
@@ -54,6 +55,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BizException.class)
     public Response handleBizException(BizException e) {
+        log.error(e.getMessage(), e);
         String message = null;
         try {
             message = messageSource.getMessage(e.getBaseCode().getErrorCode(), e.getBaseCode().getArgs(), LocaleContextHolder.getLocale());
@@ -67,6 +69,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SysException.class)
     public Response handleSysException(SysException e) {
+        log.error(e.getMessage(), e);
         String message = null;
         try {
             message = messageSource.getMessage(e.getBaseCode().getErrorCode(), e.getBaseCode().getArgs(), LocaleContextHolder.getLocale());
