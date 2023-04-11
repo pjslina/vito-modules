@@ -6,6 +6,7 @@
         <!-- 日志目录 -->
         <property name="LOG_PATH">${spring:logging.path:-/home/works/program/logs}</property>
         <property name="FILE_PREFIX">${APPLICATION_NAME}</property>
+        <property name="LOG_MAXFILESIZE">${spring:logging.filesize:-50MB}</property>
         <!--控制台日志格式-->
         <property name="STDOUT_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %X{traceId} [%t] %logger{} - %msg%n%throwable</property>
     </properties>
@@ -49,7 +50,7 @@
                 <!-- rollover on startup, daily and when the file reaches
                     10 MegaBytes -->
                 <OnStartupTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="10 MB" />
+                <SizeBasedTriggeringPolicy size="${LOG_MAXFILESIZE}" />
                 <!-- 滚动周期，与filePattern相关 -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <!-- 希望没有日志打印情况下也主动生成日志文件，可以配合CronTriggeringPolicy使用-->
