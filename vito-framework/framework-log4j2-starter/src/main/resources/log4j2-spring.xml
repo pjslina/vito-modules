@@ -6,6 +6,7 @@
         <!-- 日志目录 -->
         <property name="LOG_PATH">${spring:logging.path:-/home/works/program/logs}</property>
         <property name="FILE_PREFIX">${APPLICATION_NAME}</property>
+        <property name="AUDIT_PREFIX">audit</property>
         <property name="LOG_MAXFILESIZE">${spring:logging.filesize:-50MB}</property>
         <!--控制台日志格式-->
         <property name="STDOUT_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %X{traceId} [%t] %logger{} - %msg%n%throwable</property>
@@ -66,11 +67,37 @@
                 </Delete>
             </DirectWriteRolloverStrategy>
         </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="AUDIT-FILE" filePattern="${LOG_PATH}/${AUDIT_PREFIX}.%d{yyyyMMddHH}.log">
+            <PatternLayout pattern="%msg%n"/>
+            <Policies>
+                <!-- rollover on startup, daily and when the file reaches
+                    10 MegaBytes -->
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="${LOG_MAXFILESIZE}" />
+                <!-- 滚动周期，与filePattern相关 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 希望没有日志打印情况下也主动生成日志文件，可以配合CronTriggeringPolicy使用-->
+                <!-- 配合上面filePattern，每小时检查2次日志文件是否生成： 00:01:00 00:02:00 -->
+                <CronTriggeringPolicy schedule="0 1-2 * * * ? " />
+            </Policies>
+            <!-- 日志直接写入由filePattern表示的文件, 该配置与fileName属性冲突 -->
+            <DirectWriteRolloverStrategy>
+                <!-- 删除最后修改时间在7天以前的文件，age格式参考：org.apache.logging.log4j.core.appender.rolling.action.Duration.toString 上面的注释-->
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="${AUDIT_PREFIX}.*" />
+                    <IfLastModified age="P7D" />
+                </Delete>
+            </DirectWriteRolloverStrategy>
+        </RollingRandomAccessFile>
     </appenders>
 
     <loggers>
+        <Logger name="com.vito.framework.log.service.impl.LoggerAuditServiceImpl" level="debug" additivity="false">
+            <AppenderRef ref="AUDIT-FILE" />
+        </Logger>
         <AsyncRoot level="INFO" includeLocation="false">
-            <appender-ref ref="STDOUT"/>
+            <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="ROLLING-FILE"/>
         </AsyncRoot>
     </loggers>

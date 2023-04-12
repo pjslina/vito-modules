@@ -17,17 +17,6 @@
             <groupId>com.vito</groupId>
             <artifactId>bank-web</artifactId>
         </dependency>
-        <!--日志实现，log4j2和log back，两者选其一-->
-        <dependency>
-            <groupId>com.vito</groupId>
-            <artifactId>framework-log4j2-starter</artifactId>
-            <version>${project.build.version}</version>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.vito</groupId>-->
-<!--            <artifactId>framework-logback-starter</artifactId>-->
-<!--            <version>${project.build.version}</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>

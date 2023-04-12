@@ -27,3 +27,9 @@ management:
     web:
       exposure:
         include: env
+
+vito:
+  # 审计日志默认是false,log-type默认为logger
+  audit-log:
+    enabled: true
+#    log-type: db

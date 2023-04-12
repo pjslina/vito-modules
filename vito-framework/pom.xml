@@ -18,6 +18,7 @@
         <module>framework-web-starter</module>
         <module>framework-log4j2-starter</module>
         <module>framework-logback-starter</module>
+        <module>framework-log-common</module>
     </modules>
 
     <properties>

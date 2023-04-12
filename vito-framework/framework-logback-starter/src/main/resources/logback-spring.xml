@@ -63,10 +63,35 @@
         </filter>
     </appender>
 
+    <appender name="audit_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}/audit/${APP_NAME}.log</file>
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}/audit/${APP_NAME}.%d{yyyyMMddHH}.%i.log</fileNamePattern>
+            <!--保留时间,单位:天-->
+            <maxHistory>${LOG_FILEMAXDAY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${LOG_MAXFILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
     <appender name="file_async" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
         <appender-ref ref="FileAppender"/>
     </appender>
+    <appender name="audit_log_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="audit_log"/>
+    </appender>
+
+    <logger name="com.vito.framework.log.service.impl.LoggerAuditServiceImpl" level="debug" addtivity="false">
+        <appender-ref ref="audit_log_async" />
+    </logger>
 
     <root level="${LOG_LEVEL_ROOT}">
         <appender-ref ref="StdoutAppender"/>

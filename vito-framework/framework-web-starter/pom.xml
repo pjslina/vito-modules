@@ -25,6 +25,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!--这个包目前先放在web层，后续可能需要放在其它包中，同时需注意端点安全-->
         <!--http://localhost:8080/actuator查看暴露出来的端点-->
@@ -43,6 +53,18 @@
             <artifactId>framework-exception</artifactId>
             <version>${vito.framework.version}</version>
         </dependency>
+
+        <!--日志实现，log4j2和log back，两者选其一-->
+<!--        <dependency>-->
+<!--            <groupId>com.vito</groupId>-->
+<!--            <artifactId>framework-log4j2-starter</artifactId>-->
+<!--            <version>${project.build.version}</version>-->
+<!--        </dependency>-->
+            <dependency>
+                <groupId>com.vito</groupId>
+                <artifactId>framework-logback-starter</artifactId>
+                <version>${project.build.version}</version>
+            </dependency>
     </dependencies>
 
 </project>
