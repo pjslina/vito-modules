@@ -20,13 +20,9 @@
     <modules>
         <module>framework-common-starter</module>
         <module>framework-web-starter</module>
-        <module>framework-log4j2-starter</module>
-        <module>framework-logback-starter</module>
-        <module>framework-log-common</module>
-        <module>framework-grpc-server-starter</module>
-        <module>framework-grpc-client-starter</module>
-        <module>framework-grpc-lib</module>
         <module>framework-jdbc-starter</module>
+        <module>framework-grpc</module>
+        <module>framework-log</module>
     </modules>
 
 </project>
