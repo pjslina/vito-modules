@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package vito.bank.lib;
+
+import "common/rpc_base.proto";
+import "google/protobuf/empty.proto";// 避免重复造轮子，可以使用这个空返回
+
+option csharp_namespace = "Vito.bank.lib";
+option go_package="vito.com/bank/service";
+option java_outer_classname = "UserProto";
+option java_multiple_files = true;
+option java_package = "com.vito.bank.lib";
+
+// 服务定义
+service UserService {
+    // 列表
+    rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
+    // 获取
+    rpc GetUser (LongIdRequest) returns (User);
+    // 创建
+    rpc CreateUser (CreateUserRequest) returns (User);
+    // 更新
+    rpc UpdateUser (UpdateUserRequest) returns (User);
+    // 删除
+    rpc DeleteUser (LongIdRequest) returns (google.protobuf.Empty);
+    // 登录
+    rpc LoginUser (LoginUserRequest) returns (google.protobuf.Empty);
+}
+
+message ListUsersRequest {
+    // The maximum number of items to return
+    int32 pageSize = 1;
+    // The next_page_token value returned from a previous List request, if any.
+    int64 pageToken = 2;
+    // Specifies which parts of the user resource should be returned
+    // in the response.
+    UserView view = 3;
+}
+
+message ListUsersResponse {
+    repeated User users = 1;
+    // Token to retrieve the next page of results, or empty if there are no
+    // more results in the list.
+    int64 nextPageToken = 2;
+    int64 totalSize = 3;
+}
+
+message CreateUserRequest {
+    User user = 1;
+}
+
+message UpdateUserRequest {
+    User user = 1;
+}
+
+message LoginUserRequest {
+    string userName = 1;
+    string userPassword = 2;
+}
+
+message User {
+    int64 id = 1;
+    string userName = 2;
+    string userPassword = 3;
+    string idCard = 4;
+    string phone = 5;
+    string address = 6;
+    int64 createTime = 7; // 时间使用long类型
+    int64 updateTime = 8;
+    int64 createBy = 9;
+    int64 updateBy = 10;
+}
+
+// 为减少网络流量，返回资源视图，通过在方法的请求参数来实现，该参数允许客户端指定希望在响应中接收的资源类型
+enum UserView {
+    // Not specified, equivalent to BASIC.
+    USER_VIEW_UNSPECIFIED = 0;
+
+    // Server responses only include userName, and ID.
+    // The default value.
+    BASIC = 1;
+
+    // Full representation of the user is returned in server responses,
+    // including contents of the user.
+    FULL = 2;
+}

@@ -12,7 +12,7 @@
     <artifactId>vito-modules</artifactId>
     <version>${project.build.version}</version>
     <name>vito-modules</name>
-    <description>xxx</description>
+    <description>框架和示例代码工程</description>
 
     <properties>
         <java.version>17</java.version>

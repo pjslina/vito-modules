@@ -1,0 +1,5 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.vito.framework.log.configuration.TtlMDCAdapterInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.vito.framework.log.configuration.LogAutoConfiguration

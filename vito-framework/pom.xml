@@ -15,10 +15,7 @@
         <module>framework-exception</module>
         <module>framework-dependencies</module>
         <module>framework-utils</module>
-        <module>framework-web-starter</module>
-        <module>framework-log4j2-starter</module>
-        <module>framework-logback-starter</module>
-        <module>framework-log-common</module>
+        <module>framework-springboot-modules</module>
     </modules>
 
     <properties>
@@ -27,8 +24,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hutool.version>5.8.7</hutool.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
         <junit.version>4.13.2</junit.version>
-        <project.build.framework.version>1.0-SNAPSHOT</project.build.framework.version>
+        <project.build.framework.version>1.1-SNAPSHOT</project.build.framework.version>
     </properties>
 
     <dependencyManagement>
@@ -37,6 +35,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -69,11 +72,6 @@
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.0.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

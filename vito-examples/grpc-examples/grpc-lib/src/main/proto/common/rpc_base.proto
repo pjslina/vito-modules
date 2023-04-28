@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package vito.bank.lib;
+
+option csharp_namespace = "Vito.grpc.base";
+option go_package="vito.com/grpc/base";
+option java_multiple_files = true;
+option java_outer_classname = "JavaCommon";
+option java_package="com.vito.grpc.base";
+
+message LongIdRequest {
+  int64 id = 1;
+}
+
+message LongIdResponse {
+  int64 id = 1;
+}

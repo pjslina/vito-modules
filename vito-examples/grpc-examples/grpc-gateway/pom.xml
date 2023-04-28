@@ -3,19 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>vito-examples</artifactId>
+        <artifactId>grpc-examples</artifactId>
         <groupId>com.vito</groupId>
         <version>${project.build.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>grpc-examples</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>local-grpc-client</module>
-        <module>local-grpc-server</module>
-        <module>grpc-lib</module>
-        <module>grpc-gateway</module>
-    </modules>
+    <artifactId>grpc-gateway</artifactId>
 
 </project>

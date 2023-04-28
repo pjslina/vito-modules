@@ -21,6 +21,19 @@
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <disruptor.version>3.4.4</disruptor.version>
         <logstash.logback.version>7.3</logstash.logback.version>
+        <transmittable.thread.version>2.11.0</transmittable.thread.version>
+        <net.devh.grpc.version>2.14.0.RELEASE</net.devh.grpc.version>
+        <grpc.version>1.51.0</grpc.version>
+        <protobuf.version>3.21.9</protobuf.version>
+        <guava.version>31.1-jre</guava.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <hutool.version>5.8.7</hutool.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <protobuf.spi.version>1.39</protobuf.spi.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
+
+        <os.plugin.version>1.7.0</os.plugin.version>
+        <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
     </properties>
 
     <dependencies>
@@ -29,9 +42,20 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -61,6 +85,65 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash.logback.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable.thread.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-spring-boot-starter</artifactId>
+                <version>${net.devh.grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-server-spring-boot-starter</artifactId>
+                <version>${net.devh.grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-client-spring-boot-starter</artifactId>
+                <version>${net.devh.grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava-bom</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.entur.mapstruct.spi</groupId>
+                <artifactId>protobuf-spi-impl</artifactId>
+                <version>${protobuf.spi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -71,14 +154,72 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.4.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
                     <configuration>
-                        <!--在继承这个pom文件的项目的pom文件的properties属性里面添加start-class属性-->
-<!--                        <properties>-->
-<!--                            <start-class>com.vito.bank.BankApplication</start-class>-->
-<!--                        </properties>-->
-                        <mainClass>${start-class}</mainClass>
-                        <!-- this is necessary as we're not using the Boot parent -->
+                        <source>17</source>
+                        <target>17</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.24</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok-mapstruct-binding</artifactId>
+                                <version>0.2.0</version>
+                            </path>
+                            <!--注意lombok的相关依赖要放在mapstruct前面-->
+                            <path>
+                                <groupId>no.entur.mapstruct.spi</groupId>
+                                <artifactId>protobuf-spi-impl</artifactId>
+                                <version>1.28</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>kr.motd.maven</groupId>
+                    <artifactId>os-maven-plugin</artifactId>
+                    <version>${os.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.xolstice.maven.plugins</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>${protobuf.plugin.version}</version>
+                    <configuration>
+                        <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+                        <pluginId>grpc-java</pluginId>
+                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>compile-custom</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

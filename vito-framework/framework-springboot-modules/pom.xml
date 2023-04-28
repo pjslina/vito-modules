@@ -6,31 +6,27 @@
         <artifactId>parent-boot</artifactId>
         <groupId>com.vito</groupId>
         <version>${project.build.version}</version>
-        <relativePath>../parent-boot</relativePath>
+        <relativePath>../../parent-boot</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vito-examples</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>grpc-examples</module>
-        <module>bank-example</module>
-    </modules>
+    <artifactId>framework-springboot-modules</artifactId>
 
     <properties>
         <vito.framework.version>1.1-SNAPSHOT</vito.framework.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.vito.framework</groupId>
-                <artifactId>framework-dependencies</artifactId>
-                <version>${vito.framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <modules>
+        <module>framework-common-starter</module>
+        <module>framework-web-starter</module>
+        <module>framework-log4j2-starter</module>
+        <module>framework-logback-starter</module>
+        <module>framework-log-common</module>
+        <module>framework-grpc-server-starter</module>
+        <module>framework-grpc-client-starter</module>
+        <module>framework-grpc-lib</module>
+        <module>framework-jdbc-starter</module>
+    </modules>
 
 </project>
