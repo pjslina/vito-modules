@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.vito.framework.grpc.server.config.GrpcSeverAutoConfiguration
+  com.vito.framework.grpc.server.config.GrpcSeverAutoConfiguration,\
+  com.vito.framework.grpc.server.config.GrpcSeverExceptionAutoConfiguration

@@ -65,6 +65,13 @@
             <artifactId>framework-common-starter</artifactId>
             <version>${project.build.version}</version>
         </dependency>
+
+        <!--这里将optional设置为true是考虑到web项目不一定是使用grpc，则jar不传递依赖-->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-api</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

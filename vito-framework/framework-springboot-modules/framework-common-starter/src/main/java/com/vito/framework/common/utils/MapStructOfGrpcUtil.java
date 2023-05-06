@@ -22,7 +22,7 @@ public class MapStructOfGrpcUtil {
     /**
      * 将string类型时间转换成protobuf的timestamp类型
      * @param date 字符串格式的时间
-     * @param datePattern 时间格式
+     * @param datePattern 时间格式，如yyyy-MM-dd HH:mm:ss
      * @see cn.hutool.core.date.DatePattern
      * @return
      */

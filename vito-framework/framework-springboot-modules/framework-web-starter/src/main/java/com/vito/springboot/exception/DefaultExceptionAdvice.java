@@ -1,7 +1,7 @@
 package com.vito.springboot.exception;
 
 import com.vito.framework.dto.Response;
-import com.vito.framework.exception.BaseCode;
+import com.vito.framework.exception.BaseException;
 import com.vito.framework.exception.BizException;
 import com.vito.framework.exception.SysErrorCodeEnum;
 import com.vito.framework.exception.SysException;
@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.nio.file.AccessDeniedException;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author panjin
@@ -34,8 +31,6 @@ public class DefaultExceptionAdvice {
     @Autowired
     private MessageSource messageSource;
 
-    private static final Pattern pattern = Pattern.compile("\\{(\\d+)\\}");
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Response handleMethodArgumentException(MethodArgumentNotValidException e) {
@@ -46,7 +41,7 @@ public class DefaultExceptionAdvice {
             // 第一个参数对应资源文件的key
             message = messageSource.getMessage(fieldError.getDefaultMessage(), null, LocaleContextHolder.getLocale());
         } catch (NoSuchMessageException ex) {
-            log.warn("No internationalized resource found processing MethodArgumentNotValidException. errorMessage: {}", e.getMessage());
+            log.warn("Please add the resource of {} to the internationalized resource file", e.getMessage());
             message = fieldError.getDefaultMessage();
         }
         return Response.buildFailure("MethodArgumentError", message);
@@ -55,27 +50,23 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BizException.class)
     public Response handleBizException(BizException e) {
-        log.error(e.getMessage(), e);
-        String message = null;
-        try {
-            message = messageSource.getMessage(e.getBaseCode().getErrorCode(), e.getBaseCode().getArgs(), LocaleContextHolder.getLocale());
-        } catch (NoSuchMessageException ex) {
-            log.warn("No internationalized resource found processing BizException. errorMessage: {}", e.getBaseCode().getErrorMessage());
-            message = praseMessage(e.getBaseCode());
-        }
-        return Response.buildFailure(e.getBaseCode().getErrorCode(), message);
+        return handleBaseException(e);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SysException.class)
     public Response handleSysException(SysException e) {
+        return handleBaseException(e);
+    }
+
+    private Response handleBaseException(BaseException e) {
         log.error(e.getMessage(), e);
         String message = null;
         try {
             message = messageSource.getMessage(e.getBaseCode().getErrorCode(), e.getBaseCode().getArgs(), LocaleContextHolder.getLocale());
         } catch (NoSuchMessageException ex) {
-            log.warn("No internationalized resource found processing SysException. errorMessage: {}", e.getBaseCode().getErrorMessage());
-            message = praseMessage(e.getBaseCode());
+            log.warn("Please add the resource of {} to the internationalized resource file", e.getBaseCode().getErrorCode());
+            message = ExceptionUtil.parseMessage(e.getBaseCode());
         }
         return Response.buildFailure(e.getBaseCode().getErrorCode(), message);
     }
@@ -88,7 +79,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class})
     public Response badRequestException(IllegalArgumentException e) {
-        return defHandler(SysErrorCodeEnum.ARGUMENT_ERROR, e);
+        return ExceptionUtil.defHandler(SysErrorCodeEnum.ARGUMENT_ERROR, e);
     }
 
     /**
@@ -98,7 +89,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({AccessDeniedException.class})
     public Response badMethodExpressException(AccessDeniedException e) {
-        return defHandler(SysErrorCodeEnum.ACCESS_DENIED, e);
+        return ExceptionUtil.defHandler(SysErrorCodeEnum.ACCESS_DENIED, e);
     }
 
     /**
@@ -107,7 +98,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public Response handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return defHandler(SysErrorCodeEnum.METHOD_NOT_SUPPORTED, e);
+        return ExceptionUtil.defHandler(SysErrorCodeEnum.METHOD_NOT_SUPPORTED, e);
     }
 
     /**
@@ -116,44 +107,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
     public Response handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return defHandler(SysErrorCodeEnum.MEDIA_TYPE_NOT_SUPPORTED, e);
-    }
-
-    /**
-     * 所有异常统一处理
-     * 返回状态码:500
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public Response handleException(Exception e) {
-        return defHandler(SysErrorCodeEnum.UNKNOWN_ERROR, e);
-    }
-
-    private Response defHandler(BaseCode error, Exception e) {
-        log.error(error.getErrorMessage(), e);
-        return Response.buildFailure(error.getErrorCode(), error.getErrorMessage());
-    }
-
-    /**
-     * 如果没有配置国际化，则拿ErrorMessage和Args组装数据返回
-     * @param baseCode
-     * @return
-     */
-    private String praseMessage(BaseCode baseCode) {
-        Object[] args = baseCode.getArgs();
-        if (null == args) {
-            return baseCode.getErrorMessage();
-        }
-        Matcher matcher = pattern.matcher(baseCode.getErrorMessage());
-        StringBuffer result = new StringBuffer();
-        while (matcher.find()) {
-            MatchResult matchResult = matcher.toMatchResult();
-            int index = Integer.parseInt(matchResult.group(1));
-            String replacement = (args.length > index) ? args[index].toString() : "";
-            matcher.appendReplacement(result, replacement);
-        }
-        matcher.appendTail(result);
-        return result.toString();
+        return ExceptionUtil.defHandler(SysErrorCodeEnum.MEDIA_TYPE_NOT_SUPPORTED, e);
     }
 
 }

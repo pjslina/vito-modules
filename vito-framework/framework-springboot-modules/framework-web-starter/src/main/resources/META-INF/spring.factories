@@ -1,3 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.vito.springboot.configuration.ExceptionAdvice,\
+  com.vito.springboot.configuration.GrpcExceptionAdvice,\
+  com.vito.springboot.configuration.GlobalExceptionAdvice,\
   com.vito.springboot.configuration.WebBeanConfig

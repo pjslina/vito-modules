@@ -31,6 +31,15 @@
             <artifactId>framework-log4j2-starter</artifactId>
             <version>${project.build.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vito.framework</groupId>
+            <artifactId>framework-exception</artifactId>
+            <version>${vito.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

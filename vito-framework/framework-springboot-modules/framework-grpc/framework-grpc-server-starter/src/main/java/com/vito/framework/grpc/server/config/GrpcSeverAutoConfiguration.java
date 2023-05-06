@@ -14,4 +14,5 @@ public class GrpcSeverAutoConfiguration {
     LogGrpcInterceptor logGrpcInterceptor() {
         return new LogGrpcInterceptor();
     }
+
 }

@@ -13,6 +13,10 @@ public class MobilePageResponse<T> extends Response {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 总记录数，包含本次返回的记录数
+     * 比如：这次返回了10条，总共有100条，那么这个值就是100
+     */
     private int totalCount = 0;
 
     private int pageSize = 1;
