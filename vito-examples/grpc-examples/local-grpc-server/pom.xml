@@ -51,6 +51,11 @@
             <artifactId>framework-exception</artifactId>
             <version>${vito.framework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vito</groupId>
+            <artifactId>framework-redis-starter</artifactId>
+            <version>${project.build.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

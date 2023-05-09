@@ -23,6 +23,7 @@
         <module>framework-jdbc-starter</module>
         <module>framework-grpc</module>
         <module>framework-log</module>
+        <module>framework-redis-starter</module>
     </modules>
 
 </project>

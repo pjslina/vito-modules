@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class LongIdBaseDO extends BaseDO {
 
+    private static final long serialVersionUID = 2868510737784428964L;
     @Id
     @GeneratedValue
     private Long id;

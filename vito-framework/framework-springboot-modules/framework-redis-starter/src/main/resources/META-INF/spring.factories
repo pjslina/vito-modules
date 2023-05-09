@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.vito.framework.redis.RedisAutoConfigure,\
+  com.vito.framework.redis.template.RedisRepository

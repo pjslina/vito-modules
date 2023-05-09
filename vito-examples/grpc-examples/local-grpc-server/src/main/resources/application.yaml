@@ -11,6 +11,10 @@ spring:
 #      ddl-auto: update
       ddl-auto: create-drop
     show-sql: true
+  redis:
+    database: 0
+    host: 192.168.16.101
+    port: 6379
 
 grpc:
   server:

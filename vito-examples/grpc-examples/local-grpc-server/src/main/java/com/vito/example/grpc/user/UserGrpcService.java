@@ -4,6 +4,7 @@ import com.google.protobuf.Empty;
 import com.vito.bank.lib.*;
 import com.vito.example.grpc.common.ErrorCodeEnum;
 import com.vito.framework.exception.Assert;
+import com.vito.framework.redis.template.RedisRepository;
 import com.vito.grpc.base.LongIdRequest;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -23,6 +24,10 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RedisRepository redisRepository;
+
+    private static final String USER_KEY = "vito:user:";
 
     @Override
     public void listUsers(ListUsersRequest request, StreamObserver<ListUsersResponse> responseObserver) {
@@ -40,9 +45,16 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void getUser(LongIdRequest request, StreamObserver<User> responseObserver) {
-        Optional<UserDO> userDB = userRepository.findById(request.getId());
-        Assert.isTrue(userDB.isPresent(), ErrorCodeEnum.RES_IS_NULL);
-        responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(userDB.get()));
+        UserDO userDOCache = (UserDO) redisRepository.get(USER_KEY + request.getId());
+        if (userDOCache == null) {
+            Optional<UserDO> userDO = userRepository.findById(request.getId());
+            Assert.isTrue(userDO.isPresent(), ErrorCodeEnum.RES_IS_NULL);
+            redisRepository.setExpire(USER_KEY + request.getId(), userDO.get(),60L);
+            responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(userDO.get()));
+            responseObserver.onCompleted();
+            return;
+        }
+        responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(userDOCache));
         responseObserver.onCompleted();
     }
 
@@ -58,6 +70,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void updateUser(UpdateUserRequest request, StreamObserver<User> responseObserver) {
         UserDO userDO = UserConverter.INSTANCE.protobufOfUserToDataObject(request.getUser());
         UserDO save = userRepository.save(userDO);
+        redisRepository.setExpire(USER_KEY + request.getUser().getId(), save,60L);
         responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(save));
         responseObserver.onCompleted();
     }
@@ -65,6 +78,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void deleteUser(LongIdRequest request, StreamObserver<Empty> responseObserver) {
         userRepository.deleteById(request.getId());
+        redisRepository.del(USER_KEY + request.getId());
         responseObserver.onNext(Empty.getDefaultInstance());
         responseObserver.onCompleted();
     }

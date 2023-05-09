@@ -1,6 +1,9 @@
 package com.vito.framework.jdbc.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * @author panjin
@@ -8,6 +11,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public class LongIdAndSoftDelBaseDO extends BaseDO {
 
+    private static final long serialVersionUID = -6041029622751184317L;
     @Id
     @GeneratedValue
     private Long id;

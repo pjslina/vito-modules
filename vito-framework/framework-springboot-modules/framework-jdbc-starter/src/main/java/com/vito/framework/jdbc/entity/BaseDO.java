@@ -1,6 +1,9 @@
 package com.vito.framework.jdbc.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 /**
@@ -8,8 +11,9 @@ import java.time.LocalDateTime;
  * @author panjin
  */
 @MappedSuperclass
-public class BaseDO {
+public class BaseDO implements java.io.Serializable {
 
+    private static final long serialVersionUID = -1768509121292012269L;
     /** */
     @Column(nullable = false)
     private Long createBy = 0L;
