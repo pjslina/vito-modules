@@ -65,6 +65,7 @@ public class MapStructUtilTest {
             mapStructUtil.longToStrBySecond(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss");
         });
     }
+
     @Test
     public void testLongToStrByMilli() {
         String strByMilli = mapStructUtil.longToStrByMilli(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss");

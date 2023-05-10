@@ -15,9 +15,6 @@ import java.time.ZoneOffset;
 @Named("mapStructUtil")
 public class MapStructUtil {
 
-    private static final long LENGTH_SECOND_OF_LONG = 10L;
-    private static final long LENGTH_MILLI_SECOND_OF_LONG = 13L;
-
     /**
      * 将long类型时间转换成LocalDateTime
      *
@@ -75,7 +72,7 @@ public class MapStructUtil {
         if (null == time || 0L == time) {
             return null;
         }
-        Assert.isTrue((long) (Math.log10(time) + 1) == LENGTH_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
+        Assert.isTrue((long) (Math.log10(time) + 1) == CommonUtil.LENGTH_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
         LocalDateTime localDateTime = LocalDateTimeUtil.of(time * 1000L);
         return LocalDateTimeUtil.format(localDateTime, datePattern);
     }
@@ -93,7 +90,7 @@ public class MapStructUtil {
         if (null == time || 0L == time) {
             return null;
         }
-        Assert.isTrue((long) (Math.log10(time) + 1) == LENGTH_MILLI_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
+        Assert.isTrue((long) (Math.log10(time) + 1) == CommonUtil.LENGTH_MILLI_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
         LocalDateTime localDateTime = LocalDateTimeUtil.of(time);
         return LocalDateTimeUtil.format(localDateTime, datePattern);
     }

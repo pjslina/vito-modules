@@ -4,6 +4,8 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.util.Timestamps;
+import com.vito.framework.exception.Assert;
+import com.vito.framework.exception.SysErrorCodeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Named;
 
@@ -63,6 +65,7 @@ public class MapStructOfGrpcUtil {
         if (null == time || 0L == time) {
             return null;
         }
+        Assert.isTrue((long) (Math.log10(time) + 1) == CommonUtil.LENGTH_MILLI_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
         Instant instant = Instant.ofEpochMilli(time);
         return Timestamp.newBuilder()
                 .setSeconds(instant.getEpochSecond())

@@ -1,6 +1,7 @@
 package com.vito.framework.common.utils;
 
 import com.google.protobuf.Timestamp;
+import com.vito.framework.exception.BizException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -51,5 +52,18 @@ public class MapStructOfGrpcUtilTest {
     public void testProtoTsToLongOfSecond() {
         Long timestamp = mapStructOfGrpcUtil.protoTsToLong(Timestamp.newBuilder().setSeconds(System.currentTimeMillis() / 1000L).build());
         Assertions.assertNotNull(timestamp);
+    }
+
+    @Test
+    public void testLongToProtoTs() {
+        Timestamp timestamp = mapStructOfGrpcUtil.longToProtoTs(System.currentTimeMillis());
+        Assertions.assertNotNull(timestamp);
+    }
+
+    @Test
+    public void testLongToProtoTsBySecond() {
+        Assertions.assertThrowsExactly(BizException.class, () -> {
+            mapStructOfGrpcUtil.longToProtoTs(System.currentTimeMillis() / 1000L);
+        });
     }
 }
