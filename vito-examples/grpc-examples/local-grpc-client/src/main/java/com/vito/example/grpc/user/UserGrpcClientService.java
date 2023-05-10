@@ -26,8 +26,8 @@ public class UserGrpcClientService {
         return MobilePageResponse.of(UserConverter.INSTANCE.protobufToDtoOfUsers(users), (int)response.getTotalSize(), pageSize, String.valueOf(response.getNextPageToken()));
     }
 
-    public SingleResponse getUser(Long userId) {
-        User user = userStub.getUser(LongIdRequest.newBuilder().setId(userId).build());
+    public SingleResponse getUser(String userId) {
+        User user = userStub.getUser(LongIdRequest.newBuilder().setId(Long.valueOf(userId)).build());
         return SingleResponse.of(UserConverter.INSTANCE.protobufToDtoOfUser(user));
     }
 
@@ -36,13 +36,13 @@ public class UserGrpcClientService {
         return SingleResponse.of(UserConverter.INSTANCE.protobufToDtoOfUser(createUser));
     }
 
-    public SingleResponse updateUser(Long userId, UserCmd user) {
+    public SingleResponse updateUser(String userId, UserCmd user) {
         User updateUser = userStub.updateUser(UpdateUserRequest.newBuilder().setUser(UserConverter.INSTANCE.cmdToProtobufOfUser(user)).build());
         return SingleResponse.of(UserConverter.INSTANCE.protobufToDtoOfUser(updateUser));
     }
 
-    public Response deleteUser(Long userId) {
-        userStub.deleteUser(LongIdRequest.newBuilder().setId(userId).build());
+    public Response deleteUser(String userId) {
+        userStub.deleteUser(LongIdRequest.newBuilder().setId(Long.valueOf(userId)).build());
         return Response.buildSuccess();
     }
 }

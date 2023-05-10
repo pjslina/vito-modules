@@ -37,11 +37,12 @@ public class BaseDO implements java.io.Serializable {
         }
     }
 
+    /**
+     * 更新之前设置更新时间
+     */
     @PreUpdate
     public void preUpdate() {
-        if (updateTime == null) {
-            updateTime = LocalDateTime.now();
-        }
+        updateTime = LocalDateTime.now();
     }
 
     public Long getCreateBy() {

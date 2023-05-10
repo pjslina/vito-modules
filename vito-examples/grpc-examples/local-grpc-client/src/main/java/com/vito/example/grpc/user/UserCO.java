@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class UserCO extends BaseDTO {
 
-    private Long id;
+    private String id;
     private String userName;
     private String userPassword;
     private String idCard;

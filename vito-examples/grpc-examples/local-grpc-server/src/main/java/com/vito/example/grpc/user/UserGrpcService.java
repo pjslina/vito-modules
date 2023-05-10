@@ -3,11 +3,14 @@ package com.vito.example.grpc.user;
 import com.google.protobuf.Empty;
 import com.vito.bank.lib.*;
 import com.vito.example.grpc.common.ErrorCodeEnum;
+import com.vito.framework.common.utils.CommonUtil;
 import com.vito.framework.exception.Assert;
+import com.vito.framework.exception.BizException;
 import com.vito.framework.redis.template.RedisRepository;
 import com.vito.grpc.base.LongIdRequest;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -49,7 +52,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         if (userDOCache == null) {
             Optional<UserDO> userDO = userRepository.findById(request.getId());
             Assert.isTrue(userDO.isPresent(), ErrorCodeEnum.RES_IS_NULL);
-            redisRepository.setExpire(USER_KEY + request.getId(), userDO.get(),60L);
+            redisRepository.setExpire(USER_KEY + request.getId(), userDO.get(), 60L);
             responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(userDO.get()));
             responseObserver.onCompleted();
             return;
@@ -69,8 +72,11 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void updateUser(UpdateUserRequest request, StreamObserver<User> responseObserver) {
         UserDO userDO = UserConverter.INSTANCE.protobufOfUserToDataObject(request.getUser());
-        UserDO save = userRepository.save(userDO);
-        redisRepository.setExpire(USER_KEY + request.getUser().getId(), save,60L);
+        UserDO existingUser = userRepository.findById(userDO.getId()).orElseThrow(() -> new BizException(ErrorCodeEnum.RES_IS_NULL));
+        BeanUtils.copyProperties(userDO, existingUser, CommonUtil.getNullPropertyNames(userDO));
+        // save方法，如果传入的参数是null，会将数据库中的数据更新为null，所以采用上面的方式
+        UserDO save = userRepository.save(existingUser);
+        redisRepository.setExpire(USER_KEY + request.getUser().getId(), save, 60L);
         responseObserver.onNext(UserConverter.INSTANCE.dataObjectToProtobufOfUser(save));
         responseObserver.onCompleted();
     }

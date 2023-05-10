@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public SingleResponse getUser(@PathVariable Long userId) {
+    public SingleResponse getUser(@PathVariable String userId) {
         return userGrpcClientService.getUser(userId);
     }
 
@@ -31,12 +31,12 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public SingleResponse updateUser(@PathVariable Long userId, @RequestBody UserCmd user) {
+    public SingleResponse updateUser(@PathVariable String userId, @RequestBody UserCmd user) {
         return userGrpcClientService.updateUser(userId, user);
     }
 
     @DeleteMapping("/users/{userId}")
-    public Response deleteUser(@PathVariable Long userId) {
+    public Response deleteUser(@PathVariable String userId) {
         return userGrpcClientService.deleteUser(userId);
     }
 }
