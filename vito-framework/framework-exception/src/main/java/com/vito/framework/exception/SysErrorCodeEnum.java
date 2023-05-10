@@ -11,6 +11,7 @@ public enum SysErrorCodeEnum implements BaseCode {
     ACCESS_DENIED("1002", "没有权限"),
     METHOD_NOT_SUPPORTED("1003", "不支持的请求"),
     MEDIA_TYPE_NOT_SUPPORTED("1004", "不支持的媒体类型"),
+    TIME_FORMAT_ERROR("1005", "时间格式不正确"),
     ;
 
     SysErrorCodeEnum(String errorCode, String errorMessage) {

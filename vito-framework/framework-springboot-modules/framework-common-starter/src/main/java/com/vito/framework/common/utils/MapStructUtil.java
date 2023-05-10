@@ -1,6 +1,8 @@
 package com.vito.framework.common.utils;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+import com.vito.framework.exception.Assert;
+import com.vito.framework.exception.SysErrorCodeEnum;
 import org.mapstruct.Named;
 
 import java.time.Instant;
@@ -13,8 +15,12 @@ import java.time.ZoneOffset;
 @Named("mapStructUtil")
 public class MapStructUtil {
 
+    private static final long LENGTH_SECOND_OF_LONG = 10L;
+    private static final long LENGTH_MILLI_SECOND_OF_LONG = 13L;
+
     /**
      * 将long类型时间转换成LocalDateTime
+     *
      * @param time
      * @return
      */
@@ -28,6 +34,7 @@ public class MapStructUtil {
 
     /**
      * 将时间转换成protobuf的long类型，毫秒级（13位长度）
+     *
      * @param dateTime 时间
      * @return
      */
@@ -42,6 +49,7 @@ public class MapStructUtil {
 
     /**
      * 将时间转换成long类型，秒级（10位长度）
+     *
      * @param dateTime 时间 UTC格式
      * @return
      */
@@ -55,33 +63,37 @@ public class MapStructUtil {
     }
 
     /**
-     * 将秒级的long类型的时间转换为字符串
-     * @param time long类型时间，秒级（长度10位）
+     * 将秒级的long类型的时间转换为字符串，如果时间不是秒级，抛异常
+     *
+     * @param time        long类型时间，秒级（长度10位）
      * @param datePattern 时间格式
-     * @see cn.hutool.core.date.DatePattern
      * @return
+     * @see cn.hutool.core.date.DatePattern
      */
     @Named("longToStrBySecond")
     public String longToStrBySecond(Long time, String datePattern) {
         if (null == time || 0L == time) {
             return null;
         }
+        Assert.isTrue((long) (Math.log10(time) + 1) == LENGTH_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
         LocalDateTime localDateTime = LocalDateTimeUtil.of(time * 1000L);
         return LocalDateTimeUtil.format(localDateTime, datePattern);
     }
 
     /**
      * 将毫秒级的long类型的时间转换为字符串
-     * @param time long类型时间，毫秒级（长度13位）
+     *
+     * @param time        long类型时间，毫秒级（长度13位）
      * @param datePattern
-     * @see cn.hutool.core.date.DatePattern
      * @return
+     * @see cn.hutool.core.date.DatePattern
      */
     @Named("longToStrByMilli")
     public String longToStrByMilli(Long time, String datePattern) {
         if (null == time || 0L == time) {
             return null;
         }
+        Assert.isTrue((long) (Math.log10(time) + 1) == LENGTH_MILLI_SECOND_OF_LONG, SysErrorCodeEnum.TIME_FORMAT_ERROR);
         LocalDateTime localDateTime = LocalDateTimeUtil.of(time);
         return LocalDateTimeUtil.format(localDateTime, datePattern);
     }

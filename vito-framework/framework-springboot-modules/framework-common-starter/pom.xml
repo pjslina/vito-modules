@@ -45,5 +45,10 @@
             <artifactId>protobuf-java-util</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.vito.framework</groupId>
+            <artifactId>framework-exception</artifactId>
+            <version>${vito.framework.version}</version>
+        </dependency>
     </dependencies>
 </project>

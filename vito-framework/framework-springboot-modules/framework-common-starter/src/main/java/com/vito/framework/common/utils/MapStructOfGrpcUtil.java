@@ -63,6 +63,23 @@ public class MapStructOfGrpcUtil {
         if (null == time || 0L == time) {
             return null;
         }
-        return Timestamps.fromMillis(time);
+        Instant instant = Instant.ofEpochMilli(time);
+        return Timestamp.newBuilder()
+                .setSeconds(instant.getEpochSecond())
+                .setNanos(instant.getNano())
+                .build();
+    }
+
+    /**
+     * 将protobuf的Timestamp时间转换成Long类型
+     * @param timestamp
+     * @return
+     */
+    @Named("protoTsToLong")
+    public Long protoTsToLong(Timestamp timestamp) {
+        if (null == timestamp) {
+            return null;
+        }
+        return timestamp.getSeconds() * 1000L + timestamp.getNanos() / 1000000L;
     }
 }
