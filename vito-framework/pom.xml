@@ -15,7 +15,6 @@
         <module>framework-exception</module>
         <module>framework-dependencies</module>
         <module>framework-utils</module>
-        <module>framework-springboot-modules</module>
     </modules>
 
     <properties>
