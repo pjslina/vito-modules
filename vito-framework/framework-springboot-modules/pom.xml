@@ -24,6 +24,7 @@
         <module>framework-grpc</module>
         <module>framework-log</module>
         <module>framework-redis-starter</module>
+        <module>framework-springboot-bom</module>
     </modules>
 
 </project>

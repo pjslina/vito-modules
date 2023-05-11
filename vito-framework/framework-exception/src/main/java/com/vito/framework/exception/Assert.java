@@ -24,6 +24,7 @@ import java.util.Map;
 public abstract class Assert {
 
     /**
+     * 如果表达式为true，则不抛出异常<br>
      * Assert a boolean expression, throwing {@code BizException}
      *
      * for example
@@ -41,6 +42,7 @@ public abstract class Assert {
     }
 
     /**
+     * 如果表达式为false，则不抛出异常<br>
      * Assert a boolean expression, if expression is true, throwing {@code BizException}
      *
      * for example

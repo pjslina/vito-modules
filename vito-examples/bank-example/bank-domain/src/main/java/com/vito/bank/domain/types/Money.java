@@ -28,12 +28,15 @@ public class Money {
     }
 
     public Money subtract(Money money) {
-        BigDecimal resultAmout = this.amount.subtract(money.getAmount());
-        return new Money(resultAmout, this.currency);
+        Assert.isTrue(this.currency.getValue().equals(money.getCurrency().getValue()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
+        Assert.isTrue(this.amount.compareTo(money.getAmount()) >= 0, BankErrorCodeEnum.BALANCE_IS_NOT_ENOUGH);
+        BigDecimal resultAmount = this.amount.subtract(money.getAmount());
+        return new Money(resultAmount, this.currency);
     }
 
     public Money add(Money money) throws BizException {
-        BigDecimal resultAmout = this.amount.add(money.getAmount());
-        return new Money(resultAmout, this.currency);
+        Assert.isTrue(this.currency.getValue().equals(money.getCurrency().getValue()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
+        BigDecimal resultAmount = this.amount.add(money.getAmount());
+        return new Money(resultAmount, this.currency);
     }
 }

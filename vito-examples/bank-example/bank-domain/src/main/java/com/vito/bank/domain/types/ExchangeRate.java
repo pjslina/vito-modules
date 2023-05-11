@@ -1,5 +1,8 @@
 package com.vito.bank.domain.types;
 
+import com.vito.bank.common.enums.BankErrorCodeEnum;
+import com.vito.framework.exception.Assert;
+
 import java.math.BigDecimal;
 
 /**
@@ -17,8 +20,9 @@ public class ExchangeRate {
         this.target = target;
     }
 
-    public Money exchageTo(Money targetMoney)  {
-        BigDecimal targetMount = targetMoney.getAmount().multiply(rage);
-        return new Money(targetMount, target);
+    public Money exchangeTo(Money sourceMoney) {
+        Assert.isTrue(this.target.getValue().equals(sourceMoney.getCurrency().getValue()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
+        BigDecimal targetMount = sourceMoney.getAmount().multiply(rage);
+        return new Money(targetMount, source);
     }
 }

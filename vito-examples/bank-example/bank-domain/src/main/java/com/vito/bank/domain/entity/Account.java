@@ -24,8 +24,8 @@ public class Account {
      * @param money
      */
     public void withdraw(Money money) {
-        Assert.isTrue(this.available.compareTo(money) < 0, BankErrorCodeEnum.BALANCE_IS_NOT_ENOUGH);
-        Assert.isTrue(this.dailyLimit.compareTo(money) < 0, BankErrorCodeEnum.QUOTA_IS_NOT_ENOUGH);
+        Assert.isTrue(this.available.compareTo(money) >= 0, BankErrorCodeEnum.BALANCE_IS_NOT_ENOUGH);
+        Assert.isTrue(this.dailyLimit.compareTo(money) >= 0, BankErrorCodeEnum.QUOTA_IS_NOT_ENOUGH);
 
         this.available = this.available.subtract(money);
         this.dailyLimit = this.dailyLimit.subtract(money);
@@ -38,7 +38,7 @@ public class Account {
      * @throws Exception
      */
     public void deposit(Money money) {
-        Assert.isFalse(this.getCurrency().equals(money.getCurrency()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
+        Assert.isTrue(this.getCurrency().getValue().equals(money.getCurrency().getValue()), BankErrorCodeEnum.CURRENCY_IS_ERROR);
         this.available = this.available.add(money);
     }
 }

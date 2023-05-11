@@ -19,6 +19,7 @@
 
     <properties>
         <vito.framework.version>1.1-SNAPSHOT</vito.framework.version>
+        <vito.framework.springboot.version>1.0.0-SNAPSHOT</vito.framework.springboot.version>
     </properties>
 
     <dependencyManagement>
@@ -27,6 +28,13 @@
                 <groupId>com.vito.framework</groupId>
                 <artifactId>framework-dependencies</artifactId>
                 <version>${vito.framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.vito</groupId>
+                <artifactId>framework-springboot-bom</artifactId>
+                <version>${vito.framework.springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

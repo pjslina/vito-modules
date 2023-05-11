@@ -14,8 +14,8 @@ public class AccountTransferServiceImpl implements AccountTransferGateway {
 
     @Override
     public void transfer(Account sourceAccount, Account targetAccount, Money targetMoney, ExchangeRate exchangeRate) {
-        Money sourceMoney = exchangeRate.exchageTo(targetMoney);
-        sourceAccount.deposit(sourceMoney);
-        targetAccount.withdraw(targetMoney);
+        Money sourceMoney = exchangeRate.exchangeTo(targetMoney);
+        sourceAccount.withdraw(sourceMoney);
+        targetAccount.deposit(targetMoney);
     }
 }
