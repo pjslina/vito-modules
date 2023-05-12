@@ -16,8 +16,9 @@ public class LongIdAndSoftDelBaseDO extends BaseDO {
     @GeneratedValue
     private Long id;
 
+    /** H2数据库不支持UNSIGNED关键字 */
     /** 是否删除0-未删除，1-删除 */
-    @Column(columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 0")
+    @Column(columnDefinition="TINYINT NOT NULL DEFAULT 0")
     private Integer isDeleted = 0;
 
     public Long getId() {

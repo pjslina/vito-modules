@@ -11,7 +11,7 @@ public class SoftDelBaseDO extends BaseDO {
 
     private static final long serialVersionUID = 3559479738408406417L;
     /** 是否删除0-未删除，1-删除 */
-    @Column(columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 0")
+    @Column(columnDefinition="TINYINT NOT NULL DEFAULT 0")
     private Integer isDeleted = 0;
 
     public Integer getIsDeleted() {

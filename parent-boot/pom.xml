@@ -164,7 +164,6 @@
             <dependency>
                 <groupId>it.ozimov</groupId>
                 <artifactId>embedded-redis</artifactId>
-                <scope>test</scope>
                 <version>${embedded.redis.version}</version>
             </dependency>
         </dependencies>

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: local-grpc-server
+  datasource:
+    driver-class-name: ${db.driver}
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  redis:
+    host: localhost
+    port: 6379
+
+grpc:
+  server:
+    port: 9898
+
+db:
+  url: jdbc:h2:mem:testdb
+  username: sa
+  password: 123456
+  driver: org.h2.Driver

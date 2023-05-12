@@ -1,6 +1,8 @@
 spring:
   application:
     name: local-grpc-server
+  profiles:
+    active: @spring.profiles.active@
   datasource:
     driver-class-name: ${db.driver}
     url: ${db.url}
@@ -20,11 +22,11 @@ grpc:
   server:
     port: 9898
 
-db:
-  url: jdbc:mysql://192.168.16.101:3306/vito_bank?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
-  username: root
-  password: 12345678
-  driver: com.mysql.cj.jdbc.Driver
+#db:
+#  url: jdbc:mysql://192.168.16.101:3306/vito_bank?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+#  username: root
+#  password: 12345678
+#  driver: com.mysql.cj.jdbc.Driver
 
 #vito:
 #  # 审计日志默认是false,log-type默认为logger
