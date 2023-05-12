@@ -32,6 +32,7 @@ public class AccountRepositoryImpl implements AccountGateway {
     @Override
     public Account find(AccountId id) {
         AccountDO accountDO = accountMapper.selectById(id.getValue());
+        Assert.notNull(accountDO, BankErrorCodeEnum.ACCOUNT_IS_NULL.setArgs(new Long[] { id.getValue()}));
         return accountBuilder.toAccount(accountDO);
     }
 
