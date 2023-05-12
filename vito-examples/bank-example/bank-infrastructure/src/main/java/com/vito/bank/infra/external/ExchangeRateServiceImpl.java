@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class ExchangeRateServiceImpl implements ExchangeRateGateway {
 
     @Override
-    public ExchangeRate getExchangeRate(Currency source, Currency target) {
-        return new ExchangeRate(BigDecimal.ONE, source, target);
+    public ExchangeRate getExchangeRate(BigDecimal rage, Currency source, Currency target) {
+        return new ExchangeRate(rage, source, target);
     }
 }

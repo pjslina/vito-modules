@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 /**
  * @author panjin
  */
@@ -34,7 +36,7 @@ public class TransferServiceImpl implements TransferService {
         Money targetMoney = new Money(transferCmd.getTargetAmount(), new Currency(transferCmd.getTargetCurrency()));
         Account sourceAccount = accountGateway.find(new UserId(transferCmd.getSourceUserId()));
         Account targetAccount = accountGateway.find(new AccountNumber(transferCmd.getTargetAccountNumber()));
-        ExchangeRate exchangeRate = exchangeRateGateway.getExchangeRate(sourceAccount.getCurrency(), targetAccount.getCurrency());
+        ExchangeRate exchangeRate = exchangeRateGateway.getExchangeRate(BigDecimal.ONE, sourceAccount.getCurrency(), targetAccount.getCurrency());
         accountTransferGateway.transfer(sourceAccount, targetAccount, targetMoney, exchangeRate);
         accountGateway.save(sourceAccount);
         accountGateway.save(targetAccount);
