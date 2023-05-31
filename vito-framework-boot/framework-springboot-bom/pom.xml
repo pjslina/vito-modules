@@ -75,6 +75,11 @@
                 <artifactId>framework-grpc-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.vito</groupId>
+                <artifactId>framework-s3-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

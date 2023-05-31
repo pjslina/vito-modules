@@ -25,6 +25,7 @@
         <module>framework-log</module>
         <module>framework-redis-starter</module>
         <module>framework-springboot-bom</module>
+        <module>framework-s3-starter</module>
     </modules>
 
 </project>

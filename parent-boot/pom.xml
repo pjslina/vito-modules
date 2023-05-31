@@ -37,6 +37,7 @@
         <redisson.version>3.18.0</redisson.version>
         <jackson.datatype.version>2.15.0</jackson.datatype.version>
         <embedded.redis.version>0.7.3</embedded.redis.version>
+        <amazonaws.version>1.12.468</amazonaws.version>
 
         <!-- plugins -->
         <os.plugin.version>1.7.0</os.plugin.version>
@@ -165,6 +166,11 @@
                 <groupId>it.ozimov</groupId>
                 <artifactId>embedded-redis</artifactId>
                 <version>${embedded.redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${amazonaws.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -37,17 +37,14 @@ public class UserGrpcClientServiceTest {
         cmd.setPhone("15208533853");
         cmd.setAddress("a4");
         long createTime = System.currentTimeMillis();
-        Mockito.when(userStub.createUser(Mockito.any(CreateUserRequest.class))).thenAnswer(new Answer<User>() {
-            @Override
-            public User answer(org.mockito.invocation.InvocationOnMock invocationOnMock) throws Throwable {
-                CreateUserRequest createUserRequest = invocationOnMock.getArgument(0);
-                return User.newBuilder().setUserName(createUserRequest.getUser().getUserName())
-                        .setUserPassword(createUserRequest.getUser().getUserPassword())
-                        .setIdCard(createUserRequest.getUser().getIdCard())
-                        .setPhone(createUserRequest.getUser().getPhone())
-                        .setAddress(createUserRequest.getUser().getAddress())
-                        .setCreateTime(createTime).build();
-            }
+        Mockito.when(userStub.createUser(Mockito.any(CreateUserRequest.class))).thenAnswer((Answer<User>) invocationOnMock -> {
+            CreateUserRequest createUserRequest = invocationOnMock.getArgument(0);
+            return User.newBuilder().setUserName(createUserRequest.getUser().getUserName())
+                    .setUserPassword(createUserRequest.getUser().getUserPassword())
+                    .setIdCard(createUserRequest.getUser().getIdCard())
+                    .setPhone(createUserRequest.getUser().getPhone())
+                    .setAddress(createUserRequest.getUser().getAddress())
+                    .setCreateTime(createTime).build();
         });
         SingleResponse user = userGrpcClientService.createUser(cmd);
         assertNotNull(user.getData());

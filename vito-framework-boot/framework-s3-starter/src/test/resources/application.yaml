@@ -1,0 +1,8 @@
+s3:
+  accessKey: lMyjSQXBY0q86K7t
+  secretKey: SCMJBaFwC1zIP9WhYtsM4TDmUxCUZgmE
+  endpoint: http://192.168.16.101:9000
+  region: us-east-2
+  # 是否启用路径访问方式，如果不配置，默认是true
+  pathStyleAccess: true
+  bucketName: vito-bucket
