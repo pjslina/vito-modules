@@ -7,7 +7,7 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public class LazyFacotryBean implements FactoryBean<Object> {
 
-    private String className;
+    private final String className;
 
     public LazyFacotryBean(String className) {
         this.className = className;

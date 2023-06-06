@@ -32,8 +32,8 @@ public class AuditLogAspect {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    private AuditLogProperties auditLogProperties;
-    private IAuditService auditService;
+    private final AuditLogProperties auditLogProperties;
+    private final IAuditService auditService;
 
     public AuditLogAspect(AuditLogProperties auditLogProperties, IAuditService auditService) {
         this.auditLogProperties = auditLogProperties;
@@ -43,16 +43,16 @@ public class AuditLogAspect {
     /**
      * 用于SpEL表达式解析.
      */
-    private SpelExpressionParser spelExpressionParser = new SpelExpressionParser();
+    private final SpelExpressionParser spelExpressionParser = new SpelExpressionParser();
     /**
      * 用于获取方法参数定义名字.
      */
-    private DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
+    private final DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
 
     @Before("@within(auditLog) || @annotation(auditLog)")
     public void beforeMethod(JoinPoint joinPoint, AuditLog auditLog) {
         //判断功能是否开启
-        if (auditLogProperties.getEnabled()) {
+        if (Boolean.TRUE.equals(auditLogProperties.getEnabled())) {
             if (auditService == null) {
                 log.warn("AuditLogAspect - auditService is null");
                 return;
@@ -98,6 +98,7 @@ public class AuditLogAspect {
         audit.setMethodName(methodSignature.getName());
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         String userId = request.getHeader("x-userid-header");
         String userName = request.getHeader("x-user-header");

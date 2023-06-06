@@ -7,6 +7,8 @@
 如何使用：配置vito.audit-log.enabled=true  
 使用Spring Expression Language表达式解析方法上的参数  
 功能优化还可以参考：https://github.com/mouzt/mzt-biz-log
+* 操作日志：
+参考 https://github.com/mouzt/mzt-biz-log 完成，可直接使用
 
 ### 待完成功能
 * 日志埋点

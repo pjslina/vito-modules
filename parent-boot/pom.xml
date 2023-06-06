@@ -29,7 +29,7 @@
         <protobuf.version>3.21.9</protobuf.version>
         <guava.version>31.1-jre</guava.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <hutool.version>5.8.7</hutool.version>
+        <hutool.version>5.8.19</hutool.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <protobuf.spi.version>1.39</protobuf.spi.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
@@ -38,6 +38,7 @@
         <jackson.datatype.version>2.15.0</jackson.datatype.version>
         <embedded.redis.version>0.7.3</embedded.redis.version>
         <amazonaws.version>1.12.468</amazonaws.version>
+        <diff.version>0.95</diff.version>
 
         <!-- plugins -->
         <os.plugin.version>1.7.0</os.plugin.version>
@@ -171,6 +172,11 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-s3</artifactId>
                 <version>${amazonaws.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.danielbechler</groupId>
+                <artifactId>java-object-diff</artifactId>
+                <version>${diff.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -20,7 +20,7 @@ public class TtlMDCAdapter implements MDCAdapter {
     private static final int WRITE_OPERATION = 1;
     private static final int MAP_COPY_OPERATION = 2;
 
-    private static TtlMDCAdapter mtcMDCAdapter;
+    private static final TtlMDCAdapter mtcMDCAdapter;
 
     /**
      * keeps track of the last operation performed
@@ -155,7 +155,7 @@ public class TtlMDCAdapter implements MDCAdapter {
         if (map != null) {
             return map.keySet();
         } else {
-            return null;
+            return Collections.emptySet();
         }
     }
 
@@ -167,7 +167,7 @@ public class TtlMDCAdapter implements MDCAdapter {
     public Map<String, String> getCopyOfContextMap() {
         Map<String, String> hashMap = copyOnInheritThreadLocal.get();
         if (hashMap == null) {
-            return null;
+            return Collections.emptyMap();
         } else {
             return new HashMap<>(hashMap);
         }

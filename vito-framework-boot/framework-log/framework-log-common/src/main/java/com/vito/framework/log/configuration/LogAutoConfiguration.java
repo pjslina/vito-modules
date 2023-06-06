@@ -43,9 +43,9 @@ public class LogAutoConfiguration {
     /**
      * LogDbProperties使用懒加载方式创建，因为这个类继承了HikariConfig，
      * 不使用懒加载，且没有引入Hikari依赖的情况下会报错
-     * @param dataSource
-     * @return
-     * @throws Exception
+     * @param dataSource 数据源
+     * @return DbAuditServiceImpl
+     * @throws Exception 异常
      */
     @Bean
     @ConditionalOnProperty(name = "vito.audit-log.log-type", havingValue = "db")
