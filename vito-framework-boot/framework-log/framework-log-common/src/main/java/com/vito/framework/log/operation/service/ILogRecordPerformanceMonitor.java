@@ -2,6 +2,9 @@ package com.vito.framework.log.operation.service;
 
 import org.springframework.util.StopWatch;
 
+/**
+ * @author panjin
+ */
 public interface ILogRecordPerformanceMonitor {
 
      /**

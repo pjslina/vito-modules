@@ -1,5 +1,6 @@
 package com.vito.framework.log.operation.starter.support.aop;
 
+import com.vito.framework.exception.BaseException;
 import com.vito.framework.log.operation.beans.CodeVariableType;
 import com.vito.framework.log.operation.beans.LogRecord;
 import com.vito.framework.log.operation.beans.LogRecordOps;
@@ -20,6 +21,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StopWatch;
 
@@ -42,6 +46,8 @@ public class LogRecordAspect extends LogRecordValueParser implements Serializabl
     private ILogRecordPerformanceMonitor logRecordPerformanceMonitor;
     private ILogRecordService bizLogService;
     private boolean joinTransaction;
+
+    private MessageSource messageSource;
 
     private boolean diffLog;
 
@@ -83,6 +89,11 @@ public class LogRecordAspect extends LogRecordValueParser implements Serializabl
             methodExecuteResult.setSuccess(false);
             methodExecuteResult.setThrowable(e);
             methodExecuteResult.setErrorMsg(e.getMessage());
+            if (e instanceof BaseException baseException) {
+                methodExecuteResult.setErrorCode(baseException.getBaseCode().getErrorCode());
+                methodExecuteResult.setErrorMsg(baseException.getBaseCode().getErrorMessage());
+                methodExecuteResult.setErrorArgs(baseException.getBaseCode().getArgs());
+            }
         }
         stopWatch.start(MONITOR_TASK_AFTER_EXECUTE);
         try {
@@ -178,6 +189,16 @@ public class LogRecordAspect extends LogRecordValueParser implements Serializabl
         String action = operation.getFailLogTemplate();
         List<String> spElTemplates = getSpElTemplates(operation, action);
         String operatorIdFromService = getOperatorIdFromServiceAndPutTemplate(operation, spElTemplates);
+
+        String message = null;
+        if (StringUtils.isNoneBlank(methodExecuteResult.getErrorCode())) {
+            try {
+                message = messageSource.getMessage(methodExecuteResult.getErrorCode(), methodExecuteResult.getErrorArgs(), LocaleContextHolder.getLocale());
+                methodExecuteResult.setErrorMsg(message);
+            } catch (NoSuchMessageException ex) {
+                log.warn("Please add the resource of {} to the internationalized resource file", methodExecuteResult.getErrorCode());
+            }
+        }
 
         Map<String, String> expressionValues = processTemplate(spElTemplates, methodExecuteResult, functionNameAndReturnMap);
         saveLog(methodExecuteResult.getMethod(), true, operation, operatorIdFromService, action, expressionValues);
@@ -278,6 +299,10 @@ public class LogRecordAspect extends LogRecordValueParser implements Serializabl
 
     public void setDiffLog(boolean diffLog) {
         this.diffLog = diffLog;
+    }
+
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     @Override

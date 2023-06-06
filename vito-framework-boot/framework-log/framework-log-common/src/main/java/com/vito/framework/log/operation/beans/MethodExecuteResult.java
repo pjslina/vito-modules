@@ -12,6 +12,8 @@ public class MethodExecuteResult {
     private boolean success;
     private Throwable throwable;
     private String errorMsg;
+    private String errorCode;
+    private Object[] errorArgs;
 
     private Object result;
     private final Method method;
@@ -34,6 +36,14 @@ public class MethodExecuteResult {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public void setErrorArgs(Object[] errorArgs) {
+        this.errorArgs = errorArgs;
     }
 
     public void setResult(Object result) {
