@@ -20,6 +20,7 @@
 
         <!-- dependencies -->
         <spring-boot.version>2.7.3</spring-boot.version>
+        <spring-cloud-dependencies.version>2022.0.0</spring-cloud-dependencies.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <disruptor.version>3.4.4</disruptor.version>
         <logstash.logback.version>7.3</logstash.logback.version>
@@ -81,6 +82,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

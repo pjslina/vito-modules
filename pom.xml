@@ -8,6 +8,7 @@
         <module>vito-examples</module>
         <module>parent-boot</module>
         <module>vito-framework-boot</module>
+        <module>vito-examples/grpc-examples/grpc-gateway/grpc-springcloudgateway</module>
     </modules>
     <groupId>com.vito</groupId>
     <artifactId>vito-modules</artifactId>

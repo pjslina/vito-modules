@@ -21,6 +21,9 @@ public enum SysErrorCodeEnum implements BaseCode {
     S3_PATH_NOT_END_WITH_SPLIT("1012", "S3路径不以/结尾"),
     S3_FILE_ALREADY_EXISTS("1013", "S3文件已存在"),
     S3_PATH_CONTAINS_DOUBLE_SLASH("1014", "S3路径包含双斜杠"),
+
+    GET_LOCK_ERROR("2000", "获取分布式锁异常"),
+    LOCKER_IS_NULL("2001", "分布式锁对象不能为空"),
     ;
 
     SysErrorCodeEnum(String errorCode, String errorMessage) {
