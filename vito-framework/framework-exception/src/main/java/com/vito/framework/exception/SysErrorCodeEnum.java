@@ -24,6 +24,8 @@ public enum SysErrorCodeEnum implements BaseCode {
 
     GET_LOCK_ERROR("2000", "获取分布式锁异常"),
     LOCKER_IS_NULL("2001", "分布式锁对象不能为空"),
+    LOCK_KEY_IS_NULL("2002", "分布式锁的key不能为空"),
+    LOCK_WAIT_TIMEOUT("2003", "获取分布式锁超时"),
     ;
 
     SysErrorCodeEnum(String errorCode, String errorMessage) {
