@@ -89,7 +89,7 @@ public class TtlMDCAdapter implements MDCAdapter {
     }
 
     /**
-     * Remove the the context identified by the <code>key</code> parameter.
+     * Remove the context identified by the <code>key</code> parameter.
      * <p/>
      */
     @Override
